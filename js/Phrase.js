@@ -3,10 +3,12 @@
  * Phrase.js */
 
 const addPhrase = document.getElementById("phrase");
+const keyLetter = document.getElementsByClassName("key");
+const phraseTitle = document.getElementsByClassName('letter');
 
 class Phrase {
   constructor(phrase) {
-    this.phrase = phrase.toLowerCase();
+    this.phrase = phrase.toLowerCase(); //changes phrase to all lowercase 
   }
 
   addPhraseToDisplay() {
@@ -27,11 +29,35 @@ class Phrase {
     }
   }
 
-  checkLetter() {}
+  checkLetter() {
+    let phraseSplit = this.phrase.split(""); //Splits phrase into a array 
 
-  showMatchedLetter() {}
+    //loop thru each button and add a event listener to it 
+    for (let i = 0; i < keyLetter.length; i++) {
+      keyLetter[i].addEventListener("click", (e) => {
+
+        //loops thru phrase array and check to see if innerHTML matches letter picked 
+        for (let i = 0; i < phraseSplit.length; i++) {
+          if (e.target.innerHTML === phraseSplit[i]) {
+            this.showMatchedLetter(phraseSplit[i]); 
+          } 
+        }
+      });
+    }
+  }
+
+  showMatchedLetter(matchedLetter) {
+    for (let i = 0; i < phraseTitle.length; i++) {
+      if (phraseTitle[i].innerHTML === matchedLetter) {
+        phraseTitle[i].className = `show letter ${matchedLetter}`; 
+      }
+    }
+  }
 }
 
-const testPhrase = new Phrase("Poopy Butthole");
+const testPhrase = new Phrase("I Love Jessica");
+
 
 testPhrase.addPhraseToDisplay();
+
+testPhrase.checkLetter();
