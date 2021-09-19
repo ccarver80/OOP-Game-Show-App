@@ -1,30 +1,46 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * Game.js */
-const overlayStartGame = document.getElementById('overlay');
-const startButton = document.getElementById("btn__reset"); 
+const overlayStartGame = document.getElementById("overlay");
+const keyboard = document.getElementById('qwerty');
+
 
 class Game {
-    constructor(missed, phrases, activePhrase, ) {
-        this.missed = missed;
-        this.phrases = phrases; 
-        this.activePhrase = activePhrase; 
+    
+  constructor() {
+    this.missed = 0;
+    this.phrases = ["CHris", "lori", "doggy", "froggy", "CAT"];
+    this.activePhrase = null;
+  }
 
-    }
 
-    startGame() {
-        overlayStartGame.style.display = "none"; 
-        this.getRandomPhrase()
-    }
+  startGame() {
+    this.getRandomPhrase();
+      overlayStartGame.style.display = "none";
+      const phrase = new Phrase(this.activePhrase);
+        phrase.addPhraseToDisplay(); 
+  }
 
-    getRandomPhrase() {
-        let rdmNumber = Math.floor(Math.random() * this.phrases.length)
-        this.activePhrase = this.phrases[rdmNumber]; 
-        console.log(this.activePhrase); 
+  getRandomPhrase() {
+    let rdmNumber = Math.floor(Math.random() * this.phrases.length);
+    this.activePhrase = this.phrases[rdmNumber];
+  }
+
+  handleInteraction(key) {
+    key.disabled = true; 
+    if (phrase.checkLetter(key.innerHTML)) {
+        console.log('TRUUUEEE')
+    } else {
+        this.removeLife();
     }
 }
 
-const testStart = new Game(0, ["poop", "doop", "loop", "foop", "goop"], )
+     
+  
 
- 
-startButton.addEventListener('click', () => {testStart.startGame()})
+  removeLife() {
+      console.log("removed heart")
+  }
+}
+
+
