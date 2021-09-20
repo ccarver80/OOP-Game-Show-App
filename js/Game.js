@@ -3,6 +3,8 @@
  * Game.js */
 const overlayStartGame = document.getElementById("overlay");
 const keyboard = document.getElementById('qwerty');
+const scoreboard = document.getElementsByClassName('tries')
+const gameOverMessage = document.getElementById('game-over-message')
 
 
 class Game {
@@ -17,8 +19,7 @@ class Game {
   startGame() {
     this.getRandomPhrase();
       overlayStartGame.style.display = "none";
-      const phrase = new Phrase(this.activePhrase);
-        phrase.addPhraseToDisplay(); 
+        return this.activePhrase; 
   }
 
   getRandomPhrase() {
@@ -26,21 +27,59 @@ class Game {
     this.activePhrase = this.phrases[rdmNumber];
   }
 
-  handleInteraction(key) {
-    key.disabled = true; 
-    if (phrase.checkLetter(key.innerHTML)) {
-        console.log('TRUUUEEE')
-    } else {
-        this.removeLife();
+  handleInteraction(key, callback) {
+    key.disabled = true;
+     
+    if (this.checkForWin()) {
+      this.gameOver("win")
     }
+
+    if (callback) {
+    } else {
+       
+        this.removeLife();
+        if (this.missed === 5) {
+          this.gameOver("lose")
+        } 
+    }
+
+   
+
+
 }
 
      
   
 
   removeLife() {
-      console.log("removed heart")
+    scoreboard[this.missed].firstChild.src = "images/lostHeart.png"; 
+    this.missed += 1; 
+    
   }
+
+  checkForWin() {
+    let x = true
+    for (let i = 0; i < phraseTitle.length; i++) {
+      if (phraseTitle[i].classList.contains('hide')) {
+         x = false; 
+      }
+    
+  }
+    return x; 
 }
 
-
+  gameOver(outcome) {
+    if (outcome === "lose") {
+      overlayStartGame.style.display = "flex";
+      overlayStartGame.className = "lose"
+      gameOverMessage.innerHTML = `Sorry you lose! The correct phrase was "${this.activePhrase}"`
+      addPhrase.firstElementChild.innerHTML= "";
+    } 
+    if (outcome === "win") {
+      addPhrase.firstElementChild.innerHTML= "";
+      overlayStartGame.className = "win"
+      overlayStartGame.style.display = "flex";
+      gameOverMessage.innerHTML = `Congratulations YOU WIN!!`
+    }
+  }
+}

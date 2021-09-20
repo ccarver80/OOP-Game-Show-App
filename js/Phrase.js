@@ -4,12 +4,12 @@
 
 const addPhrase = document.getElementById("phrase");
 const keyLetter = document.getElementsByClassName("key");
-const phraseTitle = document.getElementsByClassName('letter');
-let correctLetter = false; 
+const phraseTitle = document.getElementsByClassName("letter");
+let correctLetter = false;
 
 class Phrase {
   constructor(phrase) {
-    this.phrase = phrase.toLowerCase(); //changes phrase to all lowercase 
+    this.phrase = phrase.toLowerCase(); //changes phrase to all lowercase
   }
 
   addPhraseToDisplay() {
@@ -31,33 +31,19 @@ class Phrase {
   }
 
   checkLetter(letter) {
-    let phraseSplit = this.phrase.split(""); //Splits phrase into a array 
+    for (let i = 0; i < this.phrase.length; i++) {
+      if (letter === this.phrase[i]) {
+        this.showMatchedLetter(this.phrase[i]);
+        return true;
+      }
+    }
+  }
 
-
-    //loop thru each button and add a event listener to it 
-    
-        //loops thru phrase array and check to see if innerHTML matches letter picked 
-        for (let i = 0; i < phraseSplit.length; i++) {
-          if (letter === phraseSplit[i]) {
-            this.showMatchedLetter(phraseSplit[i]); 
-            return true;
-          } else {
-            return false; 
-          }
-        }
-        
-      };
- 
   showMatchedLetter(matchedLetter) {
     for (let i = 0; i < phraseTitle.length; i++) {
       if (phraseTitle[i].innerHTML === matchedLetter) {
-        phraseTitle[i].className = `show letter ${matchedLetter}`; 
+        phraseTitle[i].className = `show letter ${matchedLetter}`;
       }
     }
   }
 }
-
-
-
-
-
