@@ -12,4 +12,4 @@ I built in for extra credit a simple "keyup" event listener so you can use your 
 
 I also added a Wins: Losses: score that updates and keeps a record of how many times you won or lost. 
 
-I also changed the background colors. 
+I also changed the background color. 
