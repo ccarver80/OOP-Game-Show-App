@@ -2,24 +2,21 @@
  * Project 4 - OOP Game App
  * Game.js */
 const overlayStartGame = document.getElementById("overlay");
-const keyboard = document.getElementById('qwerty');
-const scoreboard = document.getElementsByClassName('tries')
-const gameOverMessage = document.getElementById('game-over-message')
-
+const keyboard = document.getElementById("qwerty");
+const scoreboard = document.getElementsByClassName("tries");
+const gameOverMessage = document.getElementById("game-over-message");
 
 class Game {
-    
   constructor() {
     this.missed = 0;
-    this.phrases = ["CHris", "lori", "doggy", "froggy", "CAT"];
+    this.phrases = ["CHris", "lori", "doggy", "froggy", "CAT"]; // Temp phrases 
     this.activePhrase = null;
   }
 
-
   startGame() {
     this.getRandomPhrase();
-      overlayStartGame.style.display = "none";
-        return this.activePhrase; 
+    overlayStartGame.style.display = "none";
+    return this.activePhrase;
   }
 
   getRandomPhrase() {
@@ -29,57 +26,58 @@ class Game {
 
   handleInteraction(key, callback) {
     key.disabled = true;
-     
-    if (this.checkForWin()) {
-      this.gameOver("win")
-    }
 
     if (callback) {
+      key.className = "key chosen";
+      if (this.checkForWin()) {
+        this.gameOver("win");
+      }
     } else {
-       
-        this.removeLife();
-        if (this.missed === 5) {
-          this.gameOver("lose")
-        } 
+      key.className = "key wrong";
+      this.removeLife();
     }
-
-   
-
-
-}
-
-     
-  
+  }
 
   removeLife() {
-    scoreboard[this.missed].firstChild.src = "images/lostHeart.png"; 
-    this.missed += 1; 
-    
+    scoreboard[this.missed].firstChild.src = "images/lostHeart.png";
+    this.missed += 1;
+    if (this.missed === 5) {
+      this.gameOver("lose");
+    }
   }
 
   checkForWin() {
-    let x = true
+    let x = true;
     for (let i = 0; i < phraseTitle.length; i++) {
-      if (phraseTitle[i].classList.contains('hide')) {
-         x = false; 
+      if (phraseTitle[i].classList.contains("hide")) {
+        x = false;
       }
-    
+    }
+    return x;
   }
-    return x; 
-}
 
   gameOver(outcome) {
     if (outcome === "lose") {
-      overlayStartGame.style.display = "flex";
-      overlayStartGame.className = "lose"
-      gameOverMessage.innerHTML = `Sorry you lose! The correct phrase was "${this.activePhrase}"`
-      addPhrase.firstElementChild.innerHTML= "";
-    } 
+      overlayStartGame.className = "lose";
+      gameOverMessage.innerHTML = `Sorry you lose! The correct phrase was "${this.activePhrase}"`;
+    }
+
     if (outcome === "win") {
-      addPhrase.firstElementChild.innerHTML= "";
-      overlayStartGame.className = "win"
-      overlayStartGame.style.display = "flex";
-      gameOverMessage.innerHTML = `Congratulations YOU WIN!!`
+      overlayStartGame.className = "win";
+      gameOverMessage.innerHTML = `Congratulations YOU WIN!!`;
+    }
+    this.missed = 0;
+    this.activePhrase = null;
+    overlayStartGame.style.display = "flex";
+    addPhrase.firstElementChild.innerHTML = "";
+
+    for (let i = 0; i < keyLetter.length; i++) {
+      keyLetter[i].disabled = false;
+      keyLetter[i].className = "key";
+    }
+
+    for (let i = 0; i < scoreboard.length; i++) {
+      scoreboard[i].firstChild.src = "images/liveHeart.png";
     }
   }
 }
