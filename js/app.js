@@ -2,7 +2,7 @@
  * Project 4 - OOP Game App
  * app.js */
 const startButton = document.getElementById("btn__reset");
-let game; 
+let game; //declare a game varible to use in a global scope outside of my startButton event listener
 
 
 // Creates a new Game object when start button is pressed
@@ -20,6 +20,7 @@ for (let i = 0; i < keyLetter.length; i++) {
     })
 }
 
+//Keyboard event listener to check each key letter for the corresponding onscreen keyletter and handling the interaction
 document.addEventListener('keyup', (e) => {
     for (let i = 0; i < keyLetter.length; i++) {
         if (e.key === keyLetter[i].innerHTML) {

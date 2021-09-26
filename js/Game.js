@@ -5,9 +5,9 @@ const overlayStartGame = document.getElementById("overlay");
 const keyboard = document.getElementById("qwerty");
 const scoreboard = document.getElementsByClassName("tries");
 const gameOverMessage = document.getElementById("game-over-message");
-const winLoseRatio = document.getElementById('wins-loses')
-let wins = 0; 
-let losses = 0; 
+const winLoseRatio = document.getElementById("wins-loses");
+let wins = 0;
+let losses = 0;
 
 class Game {
   constructor() {
@@ -30,7 +30,7 @@ class Game {
     this.activePhrase = this.getRandomPhrase();
     overlayStartGame.style.display = "none";
     this.activePhrase.addPhraseToDisplay();
-    winLoseRatio.innerHTML = `Wins: ${wins} Losses ${losses}`
+    winLoseRatio.innerHTML = `Wins: ${wins} Losses ${losses}`;
   }
 
   //gets a random phrase using a random number function
@@ -46,20 +46,22 @@ class Game {
   */
   handleInteraction(key) {
     if (key.disabled === true) {
-      return null // Stops interaction if key is already disabled from keyboard
+      return null; // Stops interaction if key is already disabled from keyboard
     } else {
-    key.disabled = true;
-    if (this.activePhrase.checkLetter(key.innerHTML)) {
-      key.className = "key chosen";
-      if (this.checkForWin()) {
-        setTimeout(() => {
-          this.gameOver("win")}, 1500); // if checkForWin() returns true, the game ends
+      //disables and checks for correct letter or not
+      key.disabled = true;
+      if (this.activePhrase.checkLetter(key.innerHTML)) {
+        key.className = "key chosen";
+        if (this.checkForWin()) {
+          setTimeout(() => {
+            this.gameOver("win");    // if checkForWin() returns true, the game ends
+          }, 1500); 
+        }
+      } else {
+        key.className = "key wrong";
+        this.removeLife();
       }
-    } else {
-      key.className = "key wrong";
-      this.removeLife();
     }
-  }
   }
 
   //Replaces a liveHeart.png with lostHeart.png everytime a guess is wrong
@@ -69,7 +71,8 @@ class Game {
     if (this.missed === 5) {
       // if total misses get to 5 it ends game.
       setTimeout(() => {
-        this.gameOver("lose")}, 1500);
+        this.gameOver("lose");
+      }, 1500);
     }
   }
 
@@ -102,13 +105,13 @@ class Game {
     if (outcome === "lose") {
       overlayStartGame.className = "lose";
       gameOverMessage.innerHTML = `Sorry you lose! The correct phrase was "${this.activePhrase.phrase}"`;
-      losses += 1; 
+      losses += 1;
     }
 
     if (outcome === "win") {
       overlayStartGame.className = "win";
       gameOverMessage.innerHTML = `Congratulations YOU WIN!!`;
-      wins += 1; 
+      wins += 1;
     }
 
     for (let i = 0; i < keyLetter.length; i++) {
