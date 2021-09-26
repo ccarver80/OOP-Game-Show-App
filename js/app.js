@@ -2,11 +2,12 @@
  * Project 4 - OOP Game App
  * app.js */
 const startButton = document.getElementById("btn__reset");
-const game = new Game();
+let game; 
 
 
 // Creates a new Game object when start button is pressed
 startButton.addEventListener('click', () => {
+    game = new Game();
     game.startGame(); 
 })
 

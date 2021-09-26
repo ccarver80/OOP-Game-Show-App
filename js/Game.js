@@ -45,16 +45,21 @@ class Game {
     it removes a heart. 
   */
   handleInteraction(key) {
+    if (key.disabled === true) {
+      return null // Stops interaction if key is already disabled from keyboard
+    } else {
     key.disabled = true;
     if (this.activePhrase.checkLetter(key.innerHTML)) {
       key.className = "key chosen";
       if (this.checkForWin()) {
-        this.gameOver("win"); // if checkForWin() returns true, the game ends
+        setTimeout(() => {
+          this.gameOver("win")}, 1500); // if checkForWin() returns true, the game ends
       }
     } else {
       key.className = "key wrong";
       this.removeLife();
     }
+  }
   }
 
   //Replaces a liveHeart.png with lostHeart.png everytime a guess is wrong
@@ -63,7 +68,8 @@ class Game {
     this.missed += 1;
     if (this.missed === 5) {
       // if total misses get to 5 it ends game.
-      this.gameOver("lose");
+      setTimeout(() => {
+        this.gameOver("lose")}, 1500);
     }
   }
 
@@ -104,8 +110,6 @@ class Game {
       gameOverMessage.innerHTML = `Congratulations YOU WIN!!`;
       wins += 1; 
     }
-
-    
 
     for (let i = 0; i < keyLetter.length; i++) {
       keyLetter[i].disabled = false; // loop to reset all the keys back to normal
